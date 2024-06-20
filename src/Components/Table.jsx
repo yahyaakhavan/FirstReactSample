@@ -1,4 +1,4 @@
-export default function Table() {
+export default function Table({ children }) {
   return (
     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
       <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -23,18 +23,38 @@ export default function Table() {
           </th>
         </tr>
       </thead>
-      <tbody>
-        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-          <td className="px-6 py-4">1</td>
-          <td className="px-6 py-4">FirstProject</td>
-          <td className="px-6 py-4 font-PersianDigit">500.000</td>
-          <td className="px-6 py-4 font-PersianDigit">1402/10/02</td>
-          <td className="px-6 py-4">
-            <span className="primary--badge">بسته</span>
-          </td>
-          <td className="px-6 py-4">Opration</td>
-        </tr>
-      </tbody>
+      {children}
     </table>
+  );
+}
+export function CreateTbody({ data }) {
+  return (
+    <tbody>
+      {data.map((item, index) => {
+        return (
+          <tr
+            key={item._id}
+            className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+          >
+            <td className="px-6 py-4 font-PersianDigit">{index + 1}</td>
+            <td className="px-6 py-4">{item.title}</td>
+            <td className="px-6 py-4 font-PersianDigit">{item.budget}</td>
+            <td className="px-6 py-4 font-PersianDigit">
+              {new Date(item.deadline).toLocaleDateString("fa-IR")}
+            </td>
+            <td>
+              <span
+                className={
+                  item.status == "CLOSED" ? "red--badge" : "green--badge"
+                }
+              >
+                {item.status}
+              </span>
+            </td>
+            <td className="px-6 py-4">Opration</td>
+          </tr>
+        );
+      })}
+    </tbody>
   );
 }

@@ -4,11 +4,19 @@
 @tailwind components;
 @tailwind utilities;
 @layer components {
-  .primary--badge {
+  .red--badge {
     color: white;
     background-color: red;
     padding: 0.5rem 1rem;
     border-radius: 1.5rem;
+    @apply inline-block;
+  }
+  .green--badge {
+    color: white;
+    background-color: green;
+    padding: 0.5rem 1rem;
+    border-radius: 1.5rem;
+    @apply inline-block;
   }
   .secondary--badge {
     color: white;

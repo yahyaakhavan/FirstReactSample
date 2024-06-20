@@ -1,6 +1,7 @@
+import { Children } from "react";
 import "./App.css";
 import NavBar from "./Components/NavBar";
-import Table from "./Components/Table";
+import Table, { CreateTbody } from "./Components/Table";
 
 const projects = [
   {
@@ -43,7 +44,9 @@ function App() {
     <div>
       <NavBar />
       <div className="font-body mt-3">
-        <Table />
+        <Table children={Children}>
+          <CreateTbody data={projects} />
+        </Table>
       </div>
     </div>
   );

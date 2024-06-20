@@ -1,0 +1,22 @@
+@import url(./css/Vazirmatn-font-face.css);
+@import url(./css/Vazirmatn-FD-font-face.css);
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer components {
+  .primary--badge {
+    color: white;
+    background-color: red;
+    padding: 0.5rem 1rem;
+    border-radius: 1.5rem;
+  }
+  .secondary--badge {
+    color: white;
+    background-color: blue;
+    padding: 0 1rem 0 1rem;
+    @apply rounded-md;
+  }
+  .dropdown {
+    @apply rounded-md p-2;
+  }
+}

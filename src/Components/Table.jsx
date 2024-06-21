@@ -1,4 +1,5 @@
 export default function Table({ children }) {
+  console.log("first");
   return (
     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
       <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -27,10 +28,19 @@ export default function Table({ children }) {
     </table>
   );
 }
-export function CreateTbody({ data }) {
+export function CreateTbody({ allProjects }) {
+  if (allProjects.length == 0) {
+    return (
+      <tbody>
+        <tr>
+          <td className="font-extrabold">لطفا نوع پروژه را انتحاب نمایید</td>
+        </tr>
+      </tbody>
+    );
+  }
   return (
     <tbody>
-      {data.map((item, index) => {
+      {allProjects.map((item, index) => {
         return (
           <tr
             key={item._id}

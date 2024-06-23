@@ -41,7 +41,6 @@ export function CreateTbody({ allProjects, onChangeProjectStatus }) {
   return (
     <tbody>
       {allProjects.map((item, index) => {
-        console.log(allProjects);
         return (
           <tr
             key={item._id}

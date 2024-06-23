@@ -92,10 +92,10 @@ function App() {
     // setAllprojects(sortedByDate);
   };
   const handleChangeProjectStatus = (id) => {
-    let nArr = [];
-    nArr = [...allProjects];
-    console.log("before", projects);
-    nArr.map((item) => {
+    // let nArr = [];
+    // nArr = [...allProjects];
+
+    projects.map((item) => {
       if (item._id == id) {
         if (item.status == "OPEN") {
           return (item.status = "CLOSED");
@@ -104,16 +104,17 @@ function App() {
         }
       }
     });
-    setAllprojects(nArr);
+    // setAllprojects(nArr);
+    // console.log(allProjects);
     setIsChange((prev) => {
       return !prev;
     });
-    console.log(projects);
   };
 
   useEffect(() => {
-    setAllprojects([]);
-
+    // console.log("hi");
+    // setAllprojects([]);
+    let final = [];
     if (orderBy == "newest") {
       projects.sort((a, b) => {
         return new Date(b.deadline) - new Date(a.deadline);
@@ -123,27 +124,26 @@ function App() {
         return new Date(a.deadline) - new Date(b.deadline);
       });
     }
-    if (projectsStatus == 1) {
+    if (projectsStatus == null) {
+      return;
+    } else if (projectsStatus == 1) {
       projects.map((item) => {
-        return setAllprojects((prev) => {
-          return [...prev, item];
-        });
+        return final.push(item);
       });
     } else if (projectsStatus == 2) {
       projects.filter((item) => {
-        if (item.status == "OPEN")
-          return setAllprojects((prev) => {
-            return [...prev, item];
-          });
+        if (item.status == "OPEN") {
+          return final.push(item);
+        }
       });
     } else if (projectsStatus == 3) {
       projects.filter((item) => {
-        if (item.status == "CLOSED")
-          return setAllprojects((prev) => {
-            return [...prev, item];
-          });
+        if (item.status == "CLOSED") {
+          return final.push(item);
+        }
       });
     }
+    setAllprojects(final);
   }, [projectsStatus, orderBy, isChange]);
 
   return (

@@ -75,57 +75,75 @@ function App() {
   console.log("first");
   const [allProjects, setAllprojects] = useState([]);
   const [projectsStatus, setProjectsStatus] = useState();
+  const [orderBy, setOrderBy] = useState("newest");
+  const [isProjectsChange, setIsProjectChange] = useState(false);
 
   const handleSortBy = (value) => {
-    let sortedByDate = [...allProjects];
-    if (value == "latest") {
-      sortedByDate.sort((a, b) => {
-        return new Date(a.deadline) - new Date(b.deadline);
-      });
-    } else {
-      sortedByDate.sort((a, b) => {
-        return new Date(b.deadline) - new Date(a.deadline);
-      });
-    }
-    setAllprojects(sortedByDate);
+    setOrderBy(value);
+    // let sortedByDate = [...allProjects];
+    // if (value == "latest") {
+    //   sortedByDate.sort((a, b) => {
+    //     return new Date(a.deadline) - new Date(b.deadline);
+    //   });
+    // } else {
+    //   sortedByDate.sort((a, b) => {
+    //     return new Date(b.deadline) - new Date(a.deadline);
+    //   });
+    // }
+    // setAllprojects(sortedByDate);
+  };
+  const handleChangeProjectStatus = (id) => {
+    let nArr = [];
+    nArr = [...allProjects];
+    console.log("before", projects);
+    nArr.map((item) => {
+      if (item._id == id) {
+        if (item.status == "OPEN") {
+          return (item.status = "CLOSED");
+        } else if (item.status == "CLOSED") {
+          return (item.status = "OPEN");
+        }
+      }
+    });
+    setAllprojects(nArr);
+    setIsProjectChange(true);
+    console.log(projects);
   };
 
   useEffect(() => {
     setAllprojects([]);
+
+    if (orderBy == "newest") {
+      projects.sort((a, b) => {
+        return new Date(b.deadline) - new Date(a.deadline);
+      });
+    } else {
+      projects.sort((a, b) => {
+        return new Date(a.deadline) - new Date(b.deadline);
+      });
+    }
     if (projectsStatus == 1) {
-      projects
-        .sort((a, b) => {
-          return new Date(b.deadline) - new Date(a.deadline);
-        })
-        .map((item) => {
+      projects.map((item) => {
+        return setAllprojects((prev) => {
+          return [...prev, item];
+        });
+      });
+    } else if (projectsStatus == 2) {
+      projects.filter((item) => {
+        if (item.status == "OPEN")
           return setAllprojects((prev) => {
             return [...prev, item];
           });
-        });
-    } else if (projectsStatus == 2) {
-      projects
-        .sort((a, b) => {
-          return new Date(b.deadline) - new Date(a.deadline);
-        })
-        .filter((item) => {
-          if (item.status == "OPEN")
-            return setAllprojects((prev) => {
-              return [...prev, item];
-            });
-        });
+      });
     } else if (projectsStatus == 3) {
-      projects
-        .sort((a, b) => {
-          return new Date(b.deadline) - new Date(a.deadline);
-        })
-        .filter((item) => {
-          if (item.status == "CLOSED")
-            return setAllprojects((prev) => {
-              return [...prev, item];
-            });
-        });
+      projects.filter((item) => {
+        if (item.status == "CLOSED")
+          return setAllprojects((prev) => {
+            return [...prev, item];
+          });
+      });
     }
-  }, [projectsStatus]);
+  }, [projectsStatus, orderBy]);
 
   return (
     <div>
@@ -136,7 +154,10 @@ function App() {
       />
       <div className="font-body mt-3">
         <Table>
-          <CreateTbody allProjects={allProjects} />
+          <CreateTbody
+            allProjects={allProjects}
+            onChangeProjectStatus={handleChangeProjectStatus}
+          />
         </Table>
       </div>
     </div>

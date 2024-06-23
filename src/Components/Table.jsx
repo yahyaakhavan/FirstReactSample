@@ -28,7 +28,7 @@ export default function Table({ children }) {
     </table>
   );
 }
-export function CreateTbody({ allProjects }) {
+export function CreateTbody({ allProjects, onChangeProjectStatus }) {
   if (allProjects.length == 0) {
     return (
       <tbody>
@@ -41,6 +41,7 @@ export function CreateTbody({ allProjects }) {
   return (
     <tbody>
       {allProjects.map((item, index) => {
+        console.log(allProjects);
         return (
           <tr
             key={item._id}
@@ -61,7 +62,17 @@ export function CreateTbody({ allProjects }) {
                 {item.status}
               </span>
             </td>
-            <td className="px-6 py-4">Opration</td>
+            <td className="px-6 py-4">
+              <a
+                onClick={(e) => {
+                  onChangeProjectStatus(e.target.dataset.id);
+                }}
+                href="#"
+                data-id={item._id}
+              >
+                تغییر وضعیت
+              </a>
+            </td>
           </tr>
         );
       })}

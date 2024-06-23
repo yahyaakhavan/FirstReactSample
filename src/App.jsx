@@ -76,8 +76,7 @@ function App() {
   const [allProjects, setAllprojects] = useState([]);
   const [projectsStatus, setProjectsStatus] = useState();
   const [orderBy, setOrderBy] = useState("newest");
-  const [isProjectsChange, setIsProjectChange] = useState(false);
-
+  const [isChange, setIsChange] = useState(false);
   const handleSortBy = (value) => {
     setOrderBy(value);
     // let sortedByDate = [...allProjects];
@@ -106,7 +105,9 @@ function App() {
       }
     });
     setAllprojects(nArr);
-    setIsProjectChange(true);
+    setIsChange((prev) => {
+      return !prev;
+    });
     console.log(projects);
   };
 
@@ -143,7 +144,7 @@ function App() {
           });
       });
     }
-  }, [projectsStatus, orderBy]);
+  }, [projectsStatus, orderBy, isChange]);
 
   return (
     <div>
